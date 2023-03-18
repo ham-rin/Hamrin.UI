@@ -38,6 +38,8 @@ dependencies:
 
   #Third parties
   get:
+  dio:
+  flutter_secure_storage:
 
 dev_dependencies:
   flutter_test:
