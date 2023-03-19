@@ -39,6 +39,7 @@ dependencies:
   #Third parties
   get:
   dio:
+  package_info:
   flutter_secure_storage:
 
 dev_dependencies:

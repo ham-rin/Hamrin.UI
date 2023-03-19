@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamrin_app/presentation/controllers/login_controller.dart';
+import 'package:hamrin_app/presentation/pages/home_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -22,6 +23,7 @@ class LoginPage extends StatelessWidget {
                   controller: controller.emailController,
                   decoration: const InputDecoration(
                     labelText: 'Email',
+                    prefixIcon: Icon(Icons.mail),
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) => value!.isEmpty
@@ -36,6 +38,7 @@ class LoginPage extends StatelessWidget {
                   obscureText: true,
                   decoration: const InputDecoration(
                     labelText: 'Password',
+                    prefixIcon: Icon(Icons.lock),
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) =>
@@ -48,7 +51,7 @@ class LoginPage extends StatelessWidget {
                         ? null
                         : () => controller.login(),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       textStyle: const TextStyle(color: Colors.white),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -69,6 +72,20 @@ class LoginPage extends StatelessWidget {
                         : const Text('Login'),
                   ),
                 ),
+                const SizedBox(height: 16.0),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => HomePage());
+                  },
+                  child: Text(
+                    'Don\'t have an account? Sign up',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Theme.of(context).colorScheme.primary,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                )
               ],
             ),
           ),
