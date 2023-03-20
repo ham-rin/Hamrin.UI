@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return const Scaffold(body: Center(child: Text("Home")));
   }
 }

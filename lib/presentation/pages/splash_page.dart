@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamrin_app/presentation/controllers/splash_controller.dart';
-import 'package:hamrin_app/presentation/pages/login_page.dart';
 import 'package:hamrin_app/presentation/routes/app_routes.dart';
 
 class SplashPage extends StatelessWidget {

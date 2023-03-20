@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hamrin_app/presentation/controllers/login_controller.dart';
+import 'package:hamrin_app/presentation/pages/home_page.dart';
 import 'package:hamrin_app/presentation/routes/app_routes.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+import '../controllers/signup_controller.dart';
 
-  final LoginController controller = Get.put(LoginController());
+class SignupPage extends StatelessWidget {
+  SignupPage({Key? key}) : super(key: key);
+
+  final SignupController controller = Get.put(SignupController());
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class LoginPage extends StatelessWidget {
                   () => ElevatedButton(
                     onPressed: controller.isLoading.value
                         ? null
-                        : () => controller.login(),
+                        : () => controller.signup(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       textStyle: const TextStyle(color: Colors.white),
@@ -69,16 +71,16 @@ class LoginPage extends StatelessWidget {
                               strokeWidth: 2,
                             ),
                           )
-                        : const Text('Login'),
+                        : const Text('Signup'),
                   ),
                 ),
                 const SizedBox(height: 16.0),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(AppRoutes.signup);
+                    Get.toNamed(AppRoutes.login);
                   },
                   child: Text(
-                    'Don\'t have an account? Sign up',
+                    'Already have an account?',
                     style: TextStyle(
                       fontSize: 16.0,
                       color: Theme.of(context).colorScheme.primary,
