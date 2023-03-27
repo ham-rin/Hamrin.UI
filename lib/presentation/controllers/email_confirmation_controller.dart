@@ -1,10 +1,10 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hamrin_app/data/services/authentication_service.dart';
 import 'package:hamrin_app/data/services/token_service.dart';
 import 'package:hamrin_app/presentation/routes/app_routes.dart';
-
-import '../../data/services/authentication_service.dart';
 
 class EmailConfirmationController extends GetxController {
   final String email;
@@ -63,7 +63,8 @@ class EmailConfirmationController extends GetxController {
     }
   }
 
-  void resend() {
+  resend() async {
     startTimer();
+    await _authenticationService.resendEmail(email);
   }
 }

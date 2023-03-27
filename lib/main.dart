@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hamrin_app/presentation/pages/splash_page.dart';
 import 'package:hamrin_app/presentation/routes/app_pages.dart';
 import 'package:hamrin_app/presentation/routes/app_routes.dart';
 
@@ -12,7 +11,7 @@ const Color modernYellow = Color(0xFFFFC857);
 const Color modernBrown = Color(0xFF4B3832);
 
 final MaterialColor modernYellowMaterialColor =
-    MaterialColor(modernYellow.value, const <int, Color>{
+MaterialColor(modernYellow.value, const <int, Color>{
   50: Color(0xFFFFFCE5),
   100: Color(0xFFFFF9CC),
   200: Color(0xFFFFF299),
@@ -26,7 +25,7 @@ final MaterialColor modernYellowMaterialColor =
 });
 
 final MaterialColor modernBrownMaterialColor =
-    MaterialColor(modernBrown.value, const <int, Color>{
+MaterialColor(modernBrown.value, const <int, Color>{
   50: Color(0xFFE8E3DF),
   100: Color(0xFFC8BFB8),
   200: Color(0xFFA6918F),

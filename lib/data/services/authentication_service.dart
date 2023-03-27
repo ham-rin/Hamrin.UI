@@ -31,6 +31,12 @@ class AuthenticationService {
     return output;
   }
 
+  Future<AuthResponse> resendEmail(String email) async {
+    var response = await _dio.post("resendEmailConfirmation/$email");
+    var output = AuthResponse.fromJson(response.data);
+    return output;
+  }
+
   Future<RefreshTokenModel?> refreshToken(
       Dio client, String token, String refreshToken) async {
     var refreshTokenModel = RefreshTokenModel(token, refreshToken);
