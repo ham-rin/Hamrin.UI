@@ -1,1 +1,1 @@
-enum Platform { android, ios, web }
+enum AppPlatform { android, ios, web }

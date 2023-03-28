@@ -1,11 +1,11 @@
 class VersionInfo {
-  late String releaseDate;
+  late DateTime releaseDate;
   late ChangeLog changeLog;
 
   VersionInfo({required this.releaseDate, required this.changeLog});
 
   VersionInfo.fromJson(Map<String, dynamic> json) {
-    releaseDate = json['releaseDate'];
+    releaseDate = DateTime.parse(json['releaseDate']);
     changeLog = ChangeLog.fromJson(json['changeLog']);
   }
 }
