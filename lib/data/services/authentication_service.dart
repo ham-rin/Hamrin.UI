@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:hamrin_app/core/constants/app_constants.dart';
 import 'package:hamrin_app/core/utils/dio_tools.dart';
 
-import '../models/authentication/auth_response.dart';
-import '../models/authentication/email_confirmation_model.dart';
-import '../models/authentication/login_model.dart';
-import '../models/authentication/refresh_token_model.dart';
+import '../models/authentications/auth_response.dart';
+import '../models/authentications/email_confirmation_model.dart';
+import '../models/authentications/login_model.dart';
+import '../models/authentications/refresh_token_model.dart';
 
 class AuthenticationService {
   static final Dio _dio = DioTools.getDioInstance("auth/");
