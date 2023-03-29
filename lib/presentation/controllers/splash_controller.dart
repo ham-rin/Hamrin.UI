@@ -3,14 +3,20 @@ import 'dart:io' show Platform;
 import 'package:get/get.dart';
 import 'package:hamrin_app/data/models/versions/app_version_model.dart';
 import 'package:hamrin_app/data/models/versions/platform.dart';
+import 'package:hamrin_app/data/models/versions/version_info_model.dart';
+import 'package:hamrin_app/data/services/storage_service.dart';
 import 'package:hamrin_app/data/services/version_service.dart';
 import 'package:package_info/package_info.dart';
 
 class SplashController extends GetxController {
   final VersionService _versionService = VersionService();
+  final StorageService _storageService = StorageService();
   var version = '0.0.0'.obs;
   var shouldUpdate = false.obs;
   var canUpdate = false.obs;
+
+  // ignore: unnecessary_cast
+  var changeLog = (null as ChangeLog?).obs;
 
   @override
   void onInit() {
@@ -18,9 +24,20 @@ class SplashController extends GetxController {
     super.onInit();
   }
 
+  showVersionInfo() async {
+    var key = "lastLoadedVersion";
+    var lastLoadedVersion = await _storageService.read(key);
+    if (lastLoadedVersion != null && lastLoadedVersion == version.value) {
+      return;
+    }
+    var response =
+        await _versionService.getVersionInfo(getPlatform(), version.value);
+    changeLog.value = response.changeLog;
+    await _storageService.write(key, version.value);
+  }
+
   setVersion() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    var currentVersion = packageInfo.version;
+    var currentVersion = await getCurrentVersion();
     version.value = currentVersion;
     var appVersion = await getAppVersion();
     if (appVersion.latestAppVersion == currentVersion) {
@@ -54,6 +71,12 @@ class SplashController extends GetxController {
     var platform = getPlatform();
     var response = await _versionService.getAppVersion(platform);
     return response;
+  }
+
+  Future<String> getCurrentVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    var currentVersion = packageInfo.version;
+    return currentVersion;
   }
 
   AppPlatform getPlatform() {

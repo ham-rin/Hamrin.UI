@@ -1,10 +1,10 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hamrin_app/data/services/storage_service.dart';
 
 class TokenService {
   static String? _token;
   static String? _refreshToken;
 
-  static const storage = FlutterSecureStorage();
+  var storageService = StorageService();
 
   Future<String?> get token async => _token ??= await readToken();
 
@@ -12,27 +12,27 @@ class TokenService {
       _refreshToken ??= await readRefreshToken();
 
   writeToken(String token, String refreshToken) async {
-    await storage.write(key: "token", value: token);
-    await storage.write(key: "refreshToken", value: refreshToken);
+    await storageService.write("token", token);
+    await storageService.write("refreshToken", refreshToken);
     _token = token;
     _refreshToken = refreshToken;
   }
 
   Future<String?> readToken() async {
-    var token = await storage.read(key: "token");
+    var token = await storageService.read("token");
     _token = token;
     return token;
   }
 
   Future<String?> readRefreshToken() async {
-    var refreshToken = await storage.read(key: "refreshToken");
+    var refreshToken = await storageService.read("refreshToken");
     _refreshToken = refreshToken;
     return refreshToken;
   }
 
   Future remove() async {
-    await storage.delete(key: "token");
-    await storage.delete(key: "refreshToken");
+    await storageService.remove("token");
+    await storageService.remove("refreshToken");
     _token = null;
     _refreshToken = null;
   }
