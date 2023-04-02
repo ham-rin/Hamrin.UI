@@ -10,6 +10,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(context) {
     controller.requestLocationPermission();
+    controller.findHamrin();
     return const Scaffold(body: Center(child: Text("Home")));
   }
 }
