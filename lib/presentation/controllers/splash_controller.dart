@@ -1,16 +1,21 @@
 import 'dart:io' show Platform;
 
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:hamrin_app/core/utils/dio_tools.dart';
 import 'package:hamrin_app/data/models/versions/app_version_model.dart';
 import 'package:hamrin_app/data/models/versions/platform.dart';
 import 'package:hamrin_app/data/models/versions/version_info_model.dart';
 import 'package:hamrin_app/data/services/storage_service.dart';
+import 'package:hamrin_app/data/services/token_service.dart';
 import 'package:hamrin_app/data/services/version_service.dart';
+import 'package:hamrin_app/presentation/routes/app_routes.dart';
 import 'package:package_info/package_info.dart';
 
 class SplashController extends GetxController {
   final VersionService _versionService = VersionService();
   final StorageService _storageService = StorageService();
+  final _tokenService = TokenService();
   var version = '0.0.0'.obs;
   var shouldUpdate = false.obs;
   var canUpdate = false.obs;
@@ -20,8 +25,21 @@ class SplashController extends GetxController {
 
   @override
   void onInit() {
+    DioTools.refreshToken();
     setVersion();
+    getToPage();
     super.onInit();
+  }
+
+  getToPage() async {
+    var token = await _tokenService.token;
+    Future.delayed(const Duration(seconds: 2), () {
+      if (token == null) {
+        Get.offNamed(AppRoutes.login);
+      } else {
+        Get.offNamed(AppRoutes.home);
+      }
+    });
   }
 
   showVersionInfo() async {

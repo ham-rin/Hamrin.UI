@@ -41,9 +41,9 @@ class AuthenticationService {
       Dio client, String token, String refreshToken) async {
     var refreshTokenModel = RefreshTokenModel(token, refreshToken);
     try {
-      var result = await client.post(
-          "${AppConstants.apiUrl}auth/api/Auth/RefreshToken",
-          data: refreshTokenModel);
+      var result = await client.post("${AppConstants.apiUrl}Auth/RefreshToken",
+          data: refreshTokenModel,
+          options: Options(contentType: "application/json"));
       var output = AuthResponse.fromJson(result.data);
       return RefreshTokenModel(output.token, output.refreshToken);
     } on DioError catch (e) {

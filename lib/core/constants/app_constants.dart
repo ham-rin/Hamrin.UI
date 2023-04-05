@@ -1,3 +1,4 @@
 class AppConstants {
-  static const String apiUrl = 'https://hamrin.darkube.app/api/';
+  static const String apiUrl = '$baseUrl/api/';
+  static const String baseUrl = 'https://hamrin.darkube.app';
 }

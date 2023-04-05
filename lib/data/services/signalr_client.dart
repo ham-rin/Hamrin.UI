@@ -10,11 +10,13 @@ class SignalRClient {
 
   SignalRClient() {
     _hubConnection = HubConnectionBuilder().withUrl(
-        "${AppConstants.apiUrl}/waitingHub", options: HttpConnectionOptions(
-      accessTokenFactory: () {
-        return Future.value("Bearer ${_tokenService.token}");
-      },
-    )).build();
+        "${AppConstants.baseUrl}/waiting",
+        options: HttpConnectionOptions(
+          accessTokenFactory: () async {
+            var token = await _tokenService.token;
+            return Future.value(token);
+          },
+        )).build();
   }
 
   Future<void> startConnection() async {
