@@ -9,26 +9,34 @@ class SignalRClient {
   late HubConnection _hubConnection;
 
   SignalRClient() {
-    _hubConnection = HubConnectionBuilder().withUrl(
-        "${AppConstants.baseUrl}/waiting",
-        options: HttpConnectionOptions(
+    _hubConnection = HubConnectionBuilder()
+        .withUrl("${AppConstants.baseUrl}/waiting",
+            options: HttpConnectionOptions(
           accessTokenFactory: () async {
             var token = await _tokenService.token;
             return Future.value(token);
           },
-        )).build();
+        ))
+        .withAutomaticReconnect()
+        .build();
   }
 
   Future<void> startConnection() async {
     await _hubConnection.start();
-    _hubConnection.onclose(({error}) => print(error));
+    _hubConnection.onclose(({error}) => connectionClosed(error));
   }
 
   void addHamrinFoundHandler(Function(dynamic) handler) {
     _hubConnection.on('HamrinFound', handler);
   }
 
-  void createGroup(Point location) {
-    _hubConnection.invoke('CreateGroup', args: [location]);
+  Future createGroup(Point location) async {
+    await _hubConnection.invoke('CreateGroup', args: [location]);
+  }
+
+  connectionClosed(error) async {
+    //await _hubConnection.invoke("HamrinDisconnected");
+    print("connection disconnected");
+    print(error);
   }
 }

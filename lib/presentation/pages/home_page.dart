@@ -11,6 +11,17 @@ class HomePage extends StatelessWidget {
   Widget build(context) {
     controller.requestLocationPermission();
     controller.findHamrin();
-    return const Scaffold(body: Center(child: Text("Home")));
+    return Scaffold(
+      body: Obx(() => ListView.builder(
+        itemCount: controller.foundHamrins.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title: Text(controller.foundHamrins[index].name),
+            subtitle: Text(
+                '${controller.foundHamrins[index].distance} meters away'),
+          );
+        },
+      )),
+    );
   }
 }

@@ -4,7 +4,7 @@ import 'package:hamrin_app/data/services/authentication_service.dart';
 
 import '../../data/services/token_service.dart';
 
-class DioTools{
+class DioTools {
   static Dio getDioInstance(String url) {
     var dio = Dio(BaseOptions(baseUrl: AppConstants.apiUrl + url));
     dio.options.validateStatus = (status) => status! < 500;
@@ -40,7 +40,9 @@ class DioTools{
     var ts = TokenService();
     var token = await ts.token;
     var refreshToken = await ts.refreshToken;
-    var result = await AuthenticationService().refreshToken(Dio(), token!, refreshToken!);
+    var dio = Dio();
+    var result =
+        await AuthenticationService().refreshToken(dio, token!, refreshToken!);
     if (result == null) return null;
     ts.writeToken(result.token, result.refreshToken);
     return result.token;
