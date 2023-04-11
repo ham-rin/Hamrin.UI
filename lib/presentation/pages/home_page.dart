@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             title: Text(controller.foundHamrins[index].name),
+            onTap: () => controller.inviteHamrin(controller.foundHamrins[index].id),
             subtitle: Text(
                 '${controller.foundHamrins[index].distance} meters away'),
           );

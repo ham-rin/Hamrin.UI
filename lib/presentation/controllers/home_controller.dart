@@ -17,12 +17,11 @@ class HomeController extends GetxController {
             permission == LocationPermission.always;
   }
 
-  findHamrin() async {
+  Future findHamrin() async {
     var point = await _locationService.getLocation();
     await _client.startConnection();
-    print("started connection");
-    await _client.createGroup(point);
     _client.addHamrinFoundHandler((user) => hamrinFound(user));
+    await _client.createGroup(point);
   }
 
   hamrinFound(user) {
@@ -37,5 +36,9 @@ class HomeController extends GetxController {
       foundHamrins.add(foundUser);
     }
     update();
+  }
+
+  Future inviteHamrin(String hamrinId) async {
+    //Todo
   }
 }

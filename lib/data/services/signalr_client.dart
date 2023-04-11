@@ -34,7 +34,7 @@ class SignalRClient {
     await _hubConnection.invoke('CreateGroup', args: [location]);
   }
 
-  connectionClosed(error) async {
+  Future connectionClosed(error) async {
     //await _hubConnection.invoke("HamrinDisconnected");
     print("connection disconnected");
     print(error);
