@@ -4,6 +4,7 @@ import 'package:hamrin_app/presentation/pages/home_page.dart';
 import 'package:hamrin_app/presentation/pages/login_page.dart';
 import 'package:hamrin_app/presentation/pages/signup_page.dart';
 import 'package:hamrin_app/presentation/pages/splash_page.dart';
+import 'package:hamrin_app/presentation/pages/tracking_page.dart';
 import 'package:hamrin_app/presentation/routes/app_routes.dart';
 
 class AppPages {
@@ -27,6 +28,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.emailConfirmation,
       page: () => EmailConfirmationPage(),
+    ),
+    GetPage(
+      name: AppRoutes.tracking,
+      page: () => TrackingPage(),
     ),
   ];
 }

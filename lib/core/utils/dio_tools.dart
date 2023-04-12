@@ -39,10 +39,13 @@ class DioTools {
   static Future<String?> refreshToken() async {
     var ts = TokenService();
     var token = await ts.token;
+    if (token == null) {
+      return null;
+    }
     var refreshToken = await ts.refreshToken;
     var dio = Dio();
     var result =
-        await AuthenticationService().refreshToken(dio, token!, refreshToken!);
+        await AuthenticationService().refreshToken(dio, token, refreshToken!);
     if (result == null) return null;
     ts.writeToken(result.token, result.refreshToken);
     return result.token;

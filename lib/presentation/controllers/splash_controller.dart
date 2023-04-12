@@ -25,7 +25,7 @@ class SplashController extends GetxController {
 
   @override
   void onInit() {
-    DioTools.refreshToken();
+    DioTools.refreshToken().then((value) => handleRefreshTokenResponse(value));
     setVersion();
     getToPage();
     super.onInit();
@@ -105,6 +105,13 @@ class SplashController extends GetxController {
       return AppPlatform.ios;
     } else {
       return AppPlatform.web;
+    }
+  }
+
+  handleRefreshTokenResponse(String? value) {
+    if(value == null){
+      _tokenService.remove();
+      Get.offNamed(AppRoutes.login);
     }
   }
 }

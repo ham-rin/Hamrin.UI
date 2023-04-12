@@ -1,6 +1,6 @@
 class Point {
-  double latitude;
-  double longitude;
+  late double latitude;
+  late double longitude;
 
   Point({required this.latitude, required this.longitude});
 
@@ -9,5 +9,10 @@ class Point {
     data['latitude'] = latitude;
     data['longitude'] = longitude;
     return data;
+  }
+
+  Point.fromJson(Map<String, dynamic> json) {
+    latitude = json['latitude'];
+    longitude = json['longitude'];
   }
 }

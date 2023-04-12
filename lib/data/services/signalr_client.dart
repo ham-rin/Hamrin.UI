@@ -30,8 +30,36 @@ class SignalRClient {
     _hubConnection.on('HamrinFound', handler);
   }
 
+  void addHamrinLeftHandler(Function(dynamic) handler) {
+    _hubConnection.on('HamrinLeft', handler);
+  }
+
+  void addInvitationReceivedHandler(Function(dynamic) handler) {
+    _hubConnection.on('InvitationReceived', handler);
+  }
+
   Future createGroup(Point location) async {
     await _hubConnection.invoke('CreateGroup', args: [location]);
+  }
+
+  Future inviteHamrin(String userId, Point location) async {
+    await _hubConnection.invoke('InviteHamrin', args: [userId, location]);
+  }
+
+  Future<void> acceptInvitation(String targetUserId, Point location) async {
+    await _hubConnection.invoke('AcceptInvitation', args: [targetUserId, location]);
+  }
+
+  Future<void> declineInvitation(String targetUserId) async {
+    await _hubConnection.invoke('DeclineInvitation', args: [targetUserId]);
+  }
+
+  void addInvitationAcceptedResultReceivedMethod(Function(dynamic) handler) {
+    _hubConnection.on('AcceptedInvitationResultReceived', handler);
+  }
+
+  void addDeclinedInvitationResultReceivedMethod(Function(dynamic) handler) {
+    _hubConnection.on('DeclinedInvitationResultReceived', handler);
   }
 
   Future connectionClosed(error) async {

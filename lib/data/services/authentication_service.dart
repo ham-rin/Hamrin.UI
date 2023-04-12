@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:hamrin_app/core/constants/app_constants.dart';
 import 'package:hamrin_app/core/utils/dio_tools.dart';
+import 'package:hamrin_app/data/services/token_service.dart';
 
 import '../models/authentications/auth_response.dart';
 import '../models/authentications/email_confirmation_model.dart';
@@ -9,6 +10,7 @@ import '../models/authentications/refresh_token_model.dart';
 
 class AuthenticationService {
   static final Dio _dio = DioTools.getDioInstance("auth/");
+  final TokenService _tokenService = TokenService();
 
   Future<AuthResponse> login(String email, String password) async {
     var model = LoginModel(email, password);
@@ -49,7 +51,14 @@ class AuthenticationService {
     } on DioError catch (e) {
       var error = e.error;
       var data = e.response?.data;
-      if (e.response != null && e.response!.statusCode == 400) return null;
+      var errorCode = int.parse(data?["errors"]?[0]?["code"] ?? "-10");
+      if (errorCode == 10) {
+        return null;
+      }
+      if (errorCode == 11) {
+        return RefreshTokenModel(
+            (await _tokenService.token)!, (await _tokenService.refreshToken)!);
+      }
       rethrow;
     }
   }
