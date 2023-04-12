@@ -7,12 +7,12 @@ import 'package:hamrin_app/data/models/hub/found_hamrin.dart';
 import 'package:hamrin_app/data/models/hub/hamrin_invitation.dart';
 import 'package:hamrin_app/data/models/hub/invitation_accepted.dart';
 import 'package:hamrin_app/data/services/location_service.dart';
-import 'package:hamrin_app/data/services/signalr_client.dart';
+import 'package:hamrin_app/data/services/waiting_hub_client.dart';
 import 'package:hamrin_app/presentation/routes/app_routes.dart';
 import 'package:latlong2/latlong.dart';
 
 class HomeController extends GetxController {
-  final _client = SignalRClient();
+  final _client = WaitingHubClient();
   final _locationService = LocationService();
   var isLocationPermissionOk = true.obs;
   final foundHamrins = <FoundHamrin>[].obs;
@@ -146,6 +146,9 @@ class HomeController extends GetxController {
   acceptInvitation(HamrinInvitation invitation) async {
     await _client.acceptInvitation(
         invitation.id, await _locationService.getLocation());
+
+    Get.offNamed(AppRoutes.tracking,
+        arguments: InvitationAccepted(invitation.name, invitation.location));
   }
 
   declineInvitation(HamrinInvitation invitation) async {

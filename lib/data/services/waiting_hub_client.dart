@@ -3,12 +3,12 @@ import 'package:hamrin_app/data/models/locations/point.dart';
 import 'package:hamrin_app/data/services/token_service.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
-class SignalRClient {
+class WaitingHubClient {
   final _tokenService = TokenService();
 
-  late HubConnection _hubConnection;
+  static late HubConnection _hubConnection;
 
-  SignalRClient() {
+  WaitingHubClient() {
     _hubConnection = HubConnectionBuilder()
         .withUrl("${AppConstants.baseUrl}/waiting",
             options: HttpConnectionOptions(
@@ -47,7 +47,8 @@ class SignalRClient {
   }
 
   Future<void> acceptInvitation(String targetUserId, Point location) async {
-    await _hubConnection.invoke('AcceptInvitation', args: [targetUserId, location]);
+    await _hubConnection
+        .invoke('AcceptInvitation', args: [targetUserId, location]);
   }
 
   Future<void> declineInvitation(String targetUserId) async {
